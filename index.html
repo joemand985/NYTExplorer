@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta description="Utilization of www.MusixMatch API">
+    <meta author="">
+    <title>Lytos</title>
+    <!-- React.js -->
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <!-- Babel -->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    <!-- JQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Custom CSS -->
+    <style type="text/css">
+    img {
+    	height: 100px;
+    	width: 100px;
+    }
+
+    #item {
+    	border: 1px solid black;
+    	width: 500px;
+    }
+
+    </style>
+</head>
+
+<body>
+
+        <input type="text" id="year" placeholder="Year ..." >
+        <input type="text" id="month" placeholder="Month" >
+        <input type="submit" onclick="search()">
+
+        <div>
+
+        </div>
+
+    <div id="a"></div>
+    <div id="b"></div>
+
+
+  <div id="comp">
+    <div id="pic"></div>
+    <div id="item"></div>
+</div>
+
+
+
+    <script type="text/babel">
+
+
+function search(){
+    var year = document.getElementById("year");
+    var month = document.getElementById("month");
+    var url = "https://api.nytimes.com/svc/archive/v1/";
+    url += year.value + '/' + month.value + '.json';
+    url += '?' + $.param({
+        'api-key': "42775621bb0b4c3a980b695424ad93a0"
+    });
+console.log(url);
+
+$.ajax({
+  url: url,
+  method: 'GET',
+  success: (function(result) {
+    const root = document.getElementById('a')
+    console.log(result.response.docs[0].web_url);
+
+
+
+
+
+
+
+class Preview extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {title: 'a', description: 'a', img: 'a'};
+    }
+
+  componentDidMount(){
+   console.log('################component did mount###############');
+    var link = this.props.link
+    var url = "https://api.linkpreview.net?key=5a8daa00dcae5967162a0b2dc0483ad3d0f47dfb1e9ac&q=";
+    url += link;
+    console.log(url);
+    
+  $.ajax({
+    url: "http://api.linkpreview.net/?key=123456&q=https://www.google.com", // put url instead of link
+    success: function(result){
+                  
+                  this.setState({
+                    title: result.title,
+                    description: result.description,
+                    img: result.image
+                  })
+                  console.log(result)
+             }.bind(this)
+})
+}
+
+  render(){
+
+        const tab = <table id="item">
+    	              <thead>
+    	              	<th>News</th>
+    	              </thead>
+    	              <tbody>
+    	              	<tr><td>{this.state.title}</td></tr>
+    	              	<tr><td>{this.state.description}</td></tr>
+    	              	<tr><td><img src={this.state.img}/></td></tr>
+    	              </tbody>
+                  </table>
+  return tab  
+}
+
+}
+
+
+
+
+  function Geturls(props){
+    let rows = [];
+    for (var i=0; i<20; i++){
+        const row = <tr>
+        	            <td>
+        	            	<Preview link={props.data.response.docs[i].web_url} />
+        	            	
+        	            </td>
+        	        </tr>
+        rows.push(row);
+        
+    }
+    const table = <table>
+    	              <thead>
+    	              	<th>NYT News</th>
+    	              </thead>
+    	              <tbody>
+    	              	{rows}
+    	              </tbody>
+                  </table>
+    console.log(props.data.response.docs[0].web_url)
+        
+    console.log(url);
+    return table;
+}
+
+    ReactDOM.render(<Geturls data={result}/>, document.getElementById('b'))
+})
+})
+
+}
+
+
+
+                    
+    </script>
+</body>
+
